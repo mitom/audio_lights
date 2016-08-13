@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="control">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Audio lightning config</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/5.4.3/rzslider.min.css"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/5.4.3/rzslider.min.js"></script>
+      <script src="static/main.js"></script>
+  </head>
+  <body ng-controller="MainCtrl">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-4">
+          <input type="number" step="1" min="16" ng-model="config.sample_size">
+        </div>
+        <div class="col-xs-4">
+          <input type="number" step="50" min="0" ng-model="config.volume">
+        </div>
+        <div class="col-xs-4">
+          <button class="btn btn-lg btn-warning" ng-click="update()" ng-disabled="updating">Update</button>
+          <button class="btn btn-lg btn-danger" ng-click="reset()" >Reset</button>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>Red area</h2>
+          <rzslider
+                  rz-slider-model="config.r_area[0]"
+                  rz-slider-high="config.r_area[1]"
+                  rz-slider-options="area_slider">
+          </rzslider>
+        </div>
+        <div class="col-xs-12">
+          <h2>Green area</h2>
+          <rzslider
+                  rz-slider-model="config.g_area[0]"
+                  rz-slider-high="config.g_area[1]"
+                  rz-slider-options="area_slider">
+          </rzslider>
+        </div>
+        <div class="col-xs-12">
+          <h2>Blue area</h2>
+          <rzslider
+                  rz-slider-model="config.b_area[0]"
+                  rz-slider-high="config.b_area[1]"
+                  rz-slider-options="area_slider">
+          </rzslider>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Red Boost</h2>
+        <div class="row">
+          <div class="col-xs-11">
+            <rzslider
+                  rz-slider-model="config.r_boost[0]"
+                  rz-slider-high="config.r_boost[1]"
+                  rz-slider-options="area_slider">
+            </rzslider>
+          </div>
+          <div class="col-xs-1">
+            <input type="number" ng-model="config.r_boost[2]" min="0" step="0.1">
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <h2>Green Boost</h2>
+        <div class="row">
+          <div class="col-xs-11">
+            <rzslider
+                  rz-slider-model="config.g_boost[0]"
+                  rz-slider-high="config.g_boost[1]"
+                  rz-slider-options="area_slider">
+            </rzslider>
+          </div>
+          <div class="col-xs-1">
+            <input type="number" ng-model="config.g_boost[2]" min="0" step="0.1">
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <h2>Blue Boost</h2>
+        <div class="row">
+          <div class="col-xs-11">
+            <rzslider
+                  rz-slider-model="config.b_boost[0]"
+                  rz-slider-high="config.b_boost[1]"
+                  rz-slider-options="area_slider">
+            </rzslider>
+          </div>
+          <div class="col-xs-1">
+            <input type="number" ng-model="config.b_boost[2]" min="0" step="0.1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
