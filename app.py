@@ -7,6 +7,7 @@ import config
 import colour
 
 run = True
+calc = True
 
 def plot():
     xs,ys,cl = calculate()
@@ -19,22 +20,29 @@ def plot():
 
 
 def calculate():
-    if SR.newAudio==False:
-        return None, None, None
+    if SR.newAudio==False: return None, None, None
     desired = config.config['sample_size']
     xs,ys=SR.fft(desired=desired)
 
     #print r,g,b,alpha
     #print ys.max(), ys.ptp(), ys.sum(), ys.mean()
 
-    clapper.add(ys.mean())
+    mean = ys.mean()
+
+    claps = clapper.add(mean)
+    if (claps == 2): toggle()
+
+    if calc == False: return  None, None, None
+
     cl = colour.calculate_colour(ys)
     SR.newAudio=False
 
-    print cl
     return xs,ys,cl
 
-
+def toggle(state=None):
+    global calc
+    if (state != None): calc = state
+    else: calc = not calc
 
 def exit(signal, frame):
     global run

@@ -48,7 +48,6 @@ class SwhRecorder:
         return numpy.fromstring(audioString,dtype=numpy.int16)
         
     def record(self,forever=True):
-        print "record"
         """record secToRecord seconds of audio."""
         while True:
             if self.threadsDieNow: break
