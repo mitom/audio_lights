@@ -11,7 +11,7 @@ def add(val):
     result = 0
     if is_measureable():
         avg = get_avg()
-        if val*0.3 > avg and val > 1000*(config.config['scale']/100):
+        if val*0.3 > avg and val > 1000*(100/config.config['scale']):
             now = time.time()
 
             if lastclap == None or lastclap+0.15 < now:
