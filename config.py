@@ -12,7 +12,11 @@ def set_default():
     config['r_boost'] = [0.2,0.3,3]
     config['g_boost'] = [0,0.15,1.4]
     config['b_boost'] = [0.6,0.7,4]
-    config['volume'] = 500
+    config['saturation'] = 3000
+    config['trim'] = 5
+    config['scale'] = 100
+    config['active'] = True
+    config['clapper'] = True
 
 def load():
     set_default()

@@ -13,7 +13,7 @@ server = Process(target=app.run)
 
 @app.route("/")
 def index():
-   return render_template('index.html')
+    return app.send_static_file('index.html')
 
 @app.route("/config", methods = ['GET'])
 def get_config():

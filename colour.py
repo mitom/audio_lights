@@ -8,28 +8,29 @@ def calculate_colour(ys):
     g_boost=config.config['g_boost']
     r_boost=config.config['r_boost']
     b_boost=config.config['b_boost']
-    scale = config.config['volume']
+    scale = config.config['saturation']
 
-    max = ys.max()*0.7
-    r,g,b=0,0,0
+    r,g,b,max=0,0,0,0
     rc,gc,bc=0,0,0
 
     for n in range(0,ys.size):
         pos = n/float(ys.size)
-        p=pos*100
         if (pos >= r_area[0] and pos <= r_area[1]):
             val = ys[n]
+            if (val > max): max = val
             if (pos >= r_boost[0] and pos <= r_boost[1]): val=val*r_boost[2]
             r+=val
             rc+=1
         if (pos >= g_area[0] and pos <= g_area[1]):
             val = ys[n]
-
+            if (val > max): max = val
             if (pos >= g_boost[0] and pos <= g_boost[1]): val=val*g_boost[2]
             g+=val
             gc+=1
+
         if (pos >= b_area[0] and pos <= b_area[1]):
             val = ys[n]
+            if (val > max): max = val
             if (pos >= b_boost[0] and pos <= b_boost[1]): val=val*b_boost[2]
             b+=val
             bc+=1
@@ -46,9 +47,10 @@ def calculate_colour(ys):
     if g<0: g=0
     if b<0: b=0
 
+
     alpha = max/scale*255
-    if (alpha > 200): alpha = 215
-    if (alpha < 100): alpha = 100
+    if (alpha > 255): alpha = 255
+    if (alpha < 0): alpha = 0
 
     return {
         'r': r,

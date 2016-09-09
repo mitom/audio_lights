@@ -5,6 +5,7 @@ import signal
 import clapper
 import config
 import colour
+from yeelight import *
 
 run = True
 calc = True
@@ -14,28 +15,36 @@ def plot():
     if xs == None:
         return
     c.setData(xs, ys)
-
-    c.setBrush(QtGui.QBrush(QtGui.QColor(cl['r'], cl['g'], cl['b'], cl['alpha'])))
+    saturation = cl['alpha']
+    if saturation < 115: saturation = 115
+    if saturation > 210: saturation = 210
+    c.setBrush(QtGui.QBrush(QtGui.QColor(cl['r'], cl['g'], cl['b'], saturation)))
     uiplot.qwtPlot.replot()
 
 
 def calculate():
-    if SR.newAudio==False: return None, None, None
+    global c_active
+    if SR.newAudio==False or c_active is False: return None, None, None
+    if c_active is not config.config['active']:
+        if config.config['active'] is False:
+            light.update(True)
+            return None, None, None
+        c_active = config.config['active']
     desired = config.config['sample_size']
-    xs,ys=SR.fft(desired=desired)
+    xs,ys=SR.fft(desired=desired, trimBy=config.config['trim'], logScale=False, divBy=config.config['scale'])
 
-    #print r,g,b,alpha
-    #print ys.max(), ys.ptp(), ys.sum(), ys.mean()
 
-    mean = ys.mean()
-
-    claps = clapper.add(mean)
-    if (claps == 2): toggle()
+    if config.config['clapper']:
+        mean = ys.mean()
+        claps = clapper.add(mean)
+        if (claps == 2): toggle()
 
     if calc == False: return  None, None, None
 
     cl = colour.calculate_colour(ys)
     SR.newAudio=False
+
+    if config.config['active']: light.update(cl)
 
     return xs,ys,cl
 
@@ -43,6 +52,8 @@ def toggle(state=None):
     global calc
     if (state != None): calc = state
     else: calc = not calc
+
+    if (not calc): light.update(True)
 
 def exit(signal, frame):
     global run
@@ -53,6 +64,8 @@ def exit(signal, frame):
 
 def close():
     print 'exiting...'
+    light.update(False)
+    light.stop()
     SR.close()
     web.stop()
     sys.exit()
@@ -63,12 +76,13 @@ app = None
 
 if __name__ == "__main__":
     web.start()
-
+    c_active = config.config['active']
     SR=SwhRecorder()
     SR.setup()
     SR.continuousStart()
 
-
+    light = LightController()
+    light.start()
     ### DISPLAY WINDOWS
     if '-p' in sys.argv:
         from PyQt4 import QtCore, QtGui

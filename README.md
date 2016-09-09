@@ -7,3 +7,11 @@ My plan with it is to run it on a Raspberry Pi with a microphone and use it to p
 Hopefully I'll manage to make it clap activated (the cheesy 2 clap to activate/deactivate)
 
 Run it with `app.py -p` to display the chart.
+
+## Dependencies
+
+matplotlib
+pyaudio
+flask
+pyqt4
+qwt5
