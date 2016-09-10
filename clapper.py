@@ -11,7 +11,7 @@ def add(val):
     global lastclap
     result = 0
     if is_measureable():
-        min = 35*(10-math.log10(config.config['scale']))
+        min = 25*(10-math.log10(config.config['scale']))
         if val*0.3 > get_avg() and val > min:
             now = time.time()
             if lastclap == None or lastclap+0.15 < now:

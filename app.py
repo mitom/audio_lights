@@ -8,7 +8,6 @@ import colour
 from yeelight import *
 
 run = True
-calc = True
 
 def plot():
     xs,ys,cl = calculate()
@@ -77,6 +76,8 @@ app = None
 if __name__ == "__main__":
     web.start()
     c_active = config.config['active']
+    calc = not config.config['clapper']
+
     SR=SwhRecorder()
     SR.setup()
     SR.continuousStart()
