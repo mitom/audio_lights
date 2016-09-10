@@ -1,6 +1,7 @@
 import collections
 import time
 import config
+import math
 
 queue_length = 20
 queue = collections.deque(maxlen=queue_length)
@@ -10,10 +11,8 @@ def add(val):
     global lastclap
     result = 0
     if is_measureable():
-        avg = get_avg()
-        if val*0.3 > avg and val > 1000*(100/config.config['scale']):
+        if val*0.3 > get_avg() and val > math.sqrt(1000*math.sqrt(100/config.config['scale'])*1.5):
             now = time.time()
-
             if lastclap == None or lastclap+0.15 < now:
                 if lastclap != None and lastclap+0.5 > now:
                     lastclap = None
