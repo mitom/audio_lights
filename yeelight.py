@@ -118,7 +118,7 @@ class LightController:
         [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [
             [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
              [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
-        self.music_server = SocketServer.ThreadingTCPServer((self.local_ip, 54321), MusicTCPHandler)
+        self.music_server = SocketServer.ThreadingTCPServer((self.local_ip, 0), MusicTCPHandler)
 
         self.running = True
         self.music_server.allow_reuse_address = True
@@ -239,7 +239,7 @@ class LightController:
 
     def new_bulb(self, bulb_id):
         print "new bulb"
-        self.operate_on_bulb(bulb_id, 'set_music', [1, self.local_ip, 54321])
+        self.operate_on_bulb(bulb_id, 'set_music', [1, self.local_ip, self.music_server.socket.getsockname()[1]])
 
     def display_bulb(self, idx):
         if not self.bulb_idx2ip.has_key(idx):
