@@ -8,6 +8,7 @@ Hopefully I'll manage to make it clap activated (the cheesy 2 clap to activate/d
 
 Run it with `app.py -p` to display the chart.
 
+
 ## Dependencies
 
 matplotlib
